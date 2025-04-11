@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>健康问卷调查</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        .question { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .result { display: none; background: #f9f9f9; padding: 20px; margin-top: 30px; }
+        button { background: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>健康问卷调查</h1>
+    
+    <form id="healthForm">
+        <!-- 问题1：运动频率 -->
+        <div class="question">
+            <h3>1. 您每周运动几次？</h3>
+            <label><input type="radio" name="exercise" value="low"> 0-2次</label><br>
+            <label><input type="radio" name="exercise" value="medium"> 3-5次</label><br>
+            <label><input type="radio" name="exercise" value="high"> 6-7次</label>
+        </div>
+        
+        <!-- 问题2：睡眠质量 -->
+        <div class="question">
+            <h3>2. 您的睡眠质量如何？</h3>
+            <label><input type="radio" name="sleep" value="poor"> 经常失眠</label><br>
+            <label><input type="radio" name="sleep" value="fair"> 偶尔失眠</label><br>
+            <label><input type="radio" name="sleep" value="good"> 睡眠良好</label>
+        </div>
+        
+        <button type="button" onclick="generateAdvice()">获取健康建议</button>
+    </form>
+    
+    <div id="result" class="result"></div>
+
+    <script>
+        function generateAdvice() {
+            // 获取用户选择
+            const exercise = document.querySelector('input[name="exercise"]:checked')?.value;
+            const sleep = document.querySelector('input[name="sleep"]:checked')?.value;
+            
+            if (!exercise || !sleep) {
+                alert("请完成所有问题！");
+                return;
+            }
+
+            // 生成个性化建议
+            let advice = "<h2>您的健康建议</h2>";
+            
+            // 运动建议
+            if (exercise === "low") {
+                advice += `<p>🏃 运动建议：<strong>您需要增加运动量</strong>，WHO建议每周至少150分钟中等强度运动，可以从每天快走15分钟开始。</p>`;
+            } else if (exercise === "medium") {
+                advice += `<p>🏃 运动建议：<strong>保持当前运动习惯</strong>，建议加入2次力量训练（如俯卧撑/深蹲）。</p>`;
+            } else {
+                advice += `<p>🏃 运动建议：<strong>优秀！</strong>注意运动多样化，避免过度训练。</p>`;
+            }
+            
+            // 睡眠建议
+            if (sleep === "poor") {
+                advice += `<p>🌙 睡眠建议：<strong>改善睡眠质量</strong>：<br>
+                - 睡前1小时避免蓝光<br>
+                - 保持卧室温度18-22℃<br>
+                - 尝试4-7-8呼吸法（吸气4秒→屏息7秒→呼气8秒）</p>`;
+            } else if (sleep === "fair") {
+                advice += `<p>🌙 睡眠建议：<strong>微调作息</strong>：固定起床时间，午睡不超过30分钟。</p>`;
+            } else {
+                advice += `<p>🌙 睡眠建议：<strong>继续保持</strong>良好睡眠习惯！</p>`;
+            }
+            
+            // 组合建议
+            document.getElementById("result").innerHTML = advice;
+            document.getElementById("result").style.display = "block";
+        }
+    </script>
+</body>
+</html>
